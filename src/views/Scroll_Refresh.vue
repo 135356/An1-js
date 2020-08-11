@@ -1,6 +1,6 @@
 <!--点击屏幕下拉刷新-->
 <template>
-  <div @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd()">
+  <div @touchstart.stop="touchStart($event)" @touchmove.stop="touchMove($event)" @touchend.stop="touchEnd()">
     <div :style="'height:'+touch_div.top+'px;'">
       <div v-if="touch_state.load_show" class="load" :style="'height:'+touch_div.default_top+'px;'">
         <div class="turn">
@@ -88,7 +88,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style scoped>
   .load{
     position:fixed;
     width:100%;

@@ -10,7 +10,7 @@
       </div>
       <!--转圈圈-->
       <div v-if="model2.show" class="model2">
-        <img src="../assets/img/load/2ULogo.gif"/>
+        <img src="../assets/img/load/load.gif"/>
       </div>
       <!--引导广告-->
       <div v-if="model3.show" class="model3">
@@ -66,9 +66,13 @@
           timeF(this_)
           {
             this_.show=1;
-            localStorage.getItem('load_img')==1?this.state=2:this.state=1;
-            localStorage.setItem('load_img', this.state);
-            this.img=require('@/assets/img/load/start_'+this.state+'.png');
+            if(this_.$An2_Link.get('ipcode').toLowerCase()=='cn'){
+              this.img=require('../assets/img/load/start_cn.jpg');
+            }else{
+              this.img=require('../assets/img/load/start_en.jpg');
+            }
+            //localStorage.getItem('load_img')==1?this.state=2:this.state=1;
+            //localStorage.setItem('load_img', this.state);
             this.inter = setInterval(()=>{
               if(!--this.time){
                 this_.show=0;
@@ -155,7 +159,7 @@
     display: flex;
     transform: translate(-50%, -50%);
     border-radius:15px;
-    background:rgba(0,0,0,0.1);
+    background:rgba(255,255,255,0.8);
   }
 
   #load .model2 img {
