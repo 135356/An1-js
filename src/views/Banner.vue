@@ -1,8 +1,8 @@
 <template>
     <div class="container" v-if="banner">
         <div class="aa1" :style="'width:'+page.banner_weight+'px;left:'+page.banner_left+'px;transition: all '+page.time+'ms;'" @transitionend="page.end()" @touchstart="touch.touchStart($event)" @touchmove="touch.touchMove($event)" @touchend="touch.touchEnd()">
-            <div class="bb1" v-for="v in banner" @click="$An2_Link.to(v.link)">
-                <div v-if="v.msg">{{v.msg}}</div>
+            <div class="bb1" v-for="v in banner" @click="$An2_Link.to('/NewsInfo',{'infoid':v.infoid})">
+                <div v-if="v.content">{{v.content}}</div>
                 <img v-if="v.img" :src="v.img" />
             </div>
         </div>
@@ -13,11 +13,6 @@
 </template>
 
 <script>
-    /*banner_参数:[{
-        link:'http://baidu.com',
-        msg:'1河源开展化妆品安全科普宣传周活动',
-        img:'http://oss.2uchat.cn/u/0/0/202005/o/957547faede84d55948579f4cfc8caa9.jpg',
-    }]*/
     export default {
         name: "Banner",
         props:{'data_':Array},
@@ -55,19 +50,24 @@
                         }
                         this.banner_left= '-'+this.interval_width;
                     },
-                    next()
+                    next(left)
                     {
-                        this.i++;
-                        if(this.banner_left===0){
-                            this.interval_width = this.page_weight;
+                        if(left){
+                            //console.log(left);
+                            //this.banner_left= '-'+left;
                         }else{
-                            this.interval_width += this.page_weight;
+                            this.i++;
+                            if(this.banner_left===0){
+                                this.interval_width = this.page_weight;
+                            }else{
+                                this.interval_width += this.page_weight;
+                            }
+                            if(this.banner_weight<=this.interval_width){
+                                this.i=0;
+                                this.interval_width=0;
+                            }
+                            this.banner_left= '-'+this.interval_width;
                         }
-                        if(this.banner_weight<=this.interval_width){
-                            this.i=0;
-                            this.interval_width=0;
-                        }
-                        this.banner_left= '-'+this.interval_width;
                     },
                     end()
                     {},
@@ -93,16 +93,20 @@
                             if (Math.abs(X) > Math.abs(Y) && X > 0) {
                                 this.touch.left=0;
                                 this.touch.right=1;
-                                if(!this.touch.state&&Math.abs(X)>60){
+                                if(!this.touch.state&&Math.abs(X)>160){
                                     this.touch.state=1;
                                     this.page.next();
+                                }else if(Math.abs(X)>15){
+                                    this.page.banner_left='-'+(this.page.interval_width-160);
                                 }
                             } else if (Math.abs(X) > Math.abs(Y) && X < 0) {
                                 this.touch.left=1;
                                 this.touch.right=0;
-                                if(!this.touch.state&&Math.abs(X)>60){
+                                if(!this.touch.state&&Math.abs(X)>160){
                                     this.touch.state=1;
                                     this.page.prev();
+                                }else if(Math.abs(X)>15){
+                                    this.page.banner_left='-'+(this.page.interval_width+160);
                                 }
                             } else if (Math.abs(Y) > Math.abs(X) && Y > 0) {
                                 //console.log("top 2 bottom", X, Y);
@@ -173,6 +177,9 @@
                     z-index: 1;
                     height:28px;
                     line-height: 28px;
+                    overflow:hidden;
+                    white-space:nowrap;
+                    text-overflow:ellipsis;
                     background:rgba(185,8,10,0.9);
                 }
             }

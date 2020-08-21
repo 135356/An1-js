@@ -36,7 +36,7 @@
                     <img v-for="vv in v.img" :src="vv" />
                 </div>
             </div>
-            <div class="msg">{{v.msg}}</div>
+            <div class="content1">{{v.content}}</div>
             <div class="other">
                 <table>
                     <tr>
@@ -126,9 +126,9 @@
                 }
             }
         }
-        .msg{
+        .content1{
             text-align: left;
-            font-size:14px;
+            font-size:2.33rem;
             font-weight: bold;
         }
         .other{
