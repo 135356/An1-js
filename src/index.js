@@ -15,6 +15,12 @@ class Cc {
         return false;
     }
 
+    tips(msg)
+    {
+        setTimeout(()=>{
+        }, 1600);
+    }
+
     /*生成随机整数*/
     ranInt(min, max) {
         if (!max) {

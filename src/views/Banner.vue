@@ -23,7 +23,7 @@
                 page:{
                     i:0,//当前下标
                     time:500,//动画时间
-                    interval_time:1500,//轮播一次间隔
+                    interval_time:4000,//轮播一次间隔
                     banner_left:0,//左移px
                     banner_weight:0,//banner总宽度
                     interval:'',//定时器
